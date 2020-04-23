@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Mobil;
-class AdminController extends Controller
+use Illuminate\Support\Facades\Gate;
+use App\Customer;
+class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function($request, $next){
+            if(Gate::allows('admin')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses');
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +21,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $title='Mobil';
-        $mobil=Mobil::paginate(3);
-        return view('admin.dashboard',compact('title','mobil'));
+        $title='Customer';
+        $customer=Customer::paginate(3);
+        return view('admin.dashboard',compact('title','customer'));
     }
 
     /**
@@ -26,8 +33,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $title='Input Mobil';
-        return view('admin.inputmobil',compact('title'));
+        $title='Input Customer';
+        return view('admin.inputcustomer',compact('title'));
     }
 
     /**
@@ -44,13 +51,11 @@ class AdminController extends Controller
             'numeric' =>'Kolom :attribute harus Angka',
         ];
         $validasi = $request->validate([ 
-            'merk_mobil'=>'required',
-            'plat_mobil'=>'required',
-            'warna_mobil'=>'required',
-            'tahun_mobil'=>'required'
+            'Nama_Customer'=>'required',
+            'Alamat_Customer'=>'required'
         ],$messages);
 
-        Mobil::create($validasi);
+        Customer::create($validasi);
         return redirect('rental')->with('succes','data berhasil di update');
     }
 
@@ -73,9 +78,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $title='Input Mobil';
-        $mobil=Mobil::find($id);
-        return view('admin.inputmobil',compact('title','mobil'));
+        $title='Input Customer';
+        $customer=Customer::find($id);
+        return view('admin.inputcustomer',compact('title','customer'));
     }
 
     /**
@@ -93,13 +98,11 @@ class AdminController extends Controller
             'numeric' =>'Kolom :attribute harus Angka',
         ];
         $validasi = $request->validate([ 
-            'merk_mobil'=>'required',
-            'plat_mobil'=>'required',
-            'warna_mobil'=>'required',
-            'tahun_mobil'=>'required'
+            'Nama_Customer'=>'required',
+            'Alamat_Customer'=>'required'
         ],$messages);
 
-        Mobil::whereid_mobil($id)->update($validasi);
+        Customer::whereid_customer($id)->update($validasi);
         return redirect('rental')->with('succes','data berhasil di update');
     }
 
@@ -111,7 +114,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        Mobil::whereid_mobil($id)->delete();
+        Customer::whereid_customer($id)->delete();
         return redirect('rental')->with('succes','data berhasil di update');
     }
 }

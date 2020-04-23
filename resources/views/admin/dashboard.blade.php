@@ -70,14 +70,14 @@
             <a href="{{route('rental.create')}}">Tambah Data</a>
                 <table class="table table-bordered">
                     <thead>
-                        <tr><th>#</th><th>MOBIL</th><th>PLAT</th><th>WARNA</th><th>TAHUN</th></tr>
+                        <tr><th>#</th><th>NAMA CUSTOMER</th><th>ALAMAT</th></tr>
                     </thead>
                     <tbody>
-                        @foreach ($mobil as $in=>$val)
-                        <tr><td>{{($in+1)}}</td><td>{{$val->merk_mobil}}</td><td>{{$val->plat_mobil}}</td><td>{{$val->warna_mobil}}</td><td>{{$val->tahun_mobil}}</td>
+                        @foreach ($customer as $in=>$val)
+                        <tr><td>{{($in+1)}}</td><td>{{$val->Nama_Customer}}</td><td>{{$val->Alamat_Customer}}</td>
                         <td>
-                        <a href="{{route('rental.edit',$val->id_mobil)}}">update</a>
-                        <form action="{{route('rental.destroy', $val->id_mobil)}}" method="POST">
+                        <a href="{{route('rental.edit',$val->Id_Customer)}}">update</a>
+                        <form action="{{route('rental.destroy', $val->Id_Customer)}}" method="POST">
                             @csrf
                             @method('DELETE')
                         <button type="submit">delete</button>
@@ -86,7 +86,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{$mobil->links()}}
+                {{$customer->links()}}
             </div>
         </div>
     </div>

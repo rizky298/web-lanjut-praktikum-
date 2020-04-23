@@ -16,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('rental','AdminController');
+Route::resource('rental','CustomerController');
+Auth::routes();
+
+Route::get('/home', 'CustomerController@index')->name('home');
+
+Route::resource('PPL','PplController');
+Auth::routes();
+
+Route::get('/ppl', 'PplController@index')->name('ppl');
