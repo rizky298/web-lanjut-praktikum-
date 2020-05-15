@@ -17,6 +17,7 @@
             <div class="col-lg-12">
             <div class="col-lg-6">
                 <blockquote col="col-md-12">
+                
                         <b>BIODATA</b>
                     </blockquote>
                     <div class="col-lg-12 form-group">
